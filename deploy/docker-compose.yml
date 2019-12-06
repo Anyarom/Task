@@ -1,0 +1,21 @@
+version: "3.7"
+
+networks:
+  backend:
+    name: backend
+    driver: bridge
+
+services:
+  tasks_local:
+    container_name: server_tasks
+    image: siannarom/my:server_tasks
+    restart: on-failure
+    networks:
+      - backend
+    ports:
+      - 127.0.0.1:8080:8080
+    # volumes:
+    #  - /Users/anya/IdeaProjects/tasks/config/config.yaml:/config.yaml
+    environment:
+      CONFIG_PATH: /config.yaml
+    command: ["./app_server_tasks"]

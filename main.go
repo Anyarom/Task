@@ -6,6 +6,7 @@ import (
 	"github.com/valyala/fasthttp"
 	"net/http"
 	"os"
+	"tasks/config"
 	"tasks/handlers"
 	"tasks/keeper"
 	"tasks/workers"
@@ -15,6 +16,12 @@ func main() {
 
 	// настройки логирования в приложении
 	log := zerolog.New(os.Stdout).With().Logger()
+
+	// чтение с конфига с помощью библиотеки viper
+	cfg, err := config.InitConfig(os.Getenv("CONFIG_PATH"))
+	if err != nil {
+		log.Fatal().Caller().Err(err).Msg("ошибка при чтении конфига")
+	}
 
 	// инициализация интерфейса с мапой
 	mapKeeper := keeper.InitMapKeeper()
@@ -27,7 +34,7 @@ func main() {
 	defer close(reqExtendedChan)
 
 	// запуск в отдельных горутинах нескольких параллельных обработчиков запросов
-	for i := 0; i < 10; i++ {
+	for i := 0; i < cfg.Quantity; i++ {
 		go workers.Worker(reqExtendedChan, client, mapKeeper, log)
 	}
 
@@ -45,7 +52,7 @@ func main() {
 		Handler:            router.Handler,
 		MaxRequestBodySize: 20 * 1024 * 1024,
 	}
-	if err := server.ListenAndServe("127.0.0.1:8080"); err != nil {
+	if err := server.ListenAndServe(":8080"); err != nil {
 		log.Fatal().Caller().Err(err).Msg("Ошибка на сервере")
 	}
 }
