@@ -39,7 +39,7 @@ func TestAddTask(t *testing.T) {
 	body := bytes.NewReader(bodyRequest)
 
 	// отправление, используя созданный httpClient, запроса на сервер
-	resp, err := client.Post("http://127.0.0.1:8080/addTask", "application/json", body)
+	resp, err := client.Post("http://127.0.0.1:8080/task", "application/json", body)
 	if err != nil {
 		log.Error().Caller().Err(err).Msg("")
 		t.Fail()

@@ -28,17 +28,17 @@ func main() {
 
 	// запуск в отдельных горутинах нескольких параллельных обработчиков запросов
 	for i := 0; i < 10; i++ {
-		go workers.Worker(reqExtendedChan, client, &mapKeeper, log)
+		go workers.Worker(reqExtendedChan, client, mapKeeper, log)
 	}
 
 	// инициализация структуры handler для всех запросов
-	wrapperHandler := handlers.InitWrapperHandler(log, &mapKeeper, client, reqExtendedChan)
+	wrapperHandler := handlers.InitWrapperHandler(log, mapKeeper, client, reqExtendedChan)
 
 	// подключение роутинга к web-серверу
 	router := fasthttprouter.New()
-	router.POST("/addTask", handlers.InterceptorLogger(wrapperHandler.AddTaskHandler, log))
-	router.GET("/getTasks", handlers.InterceptorLogger(wrapperHandler.GetTasksHandler, log))
-	router.GET("/deleteTask", handlers.InterceptorLogger(wrapperHandler.DeleteTaskHandler, log))
+	router.POST("/task", handlers.InterceptorLogger(wrapperHandler.AddTaskHandler, log))
+	router.GET("/tasks", handlers.InterceptorLogger(wrapperHandler.GetTasksHandler, log))
+	router.DELETE("/task", handlers.InterceptorLogger(wrapperHandler.DeleteTaskHandler, log))
 
 	// настройка и запуск сервера
 	server := &fasthttp.Server{

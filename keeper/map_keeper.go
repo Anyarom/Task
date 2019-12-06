@@ -12,10 +12,10 @@ type MapKeeper struct {
 }
 
 // функция для инициализации структуры MapKeeper
-func InitMapKeeper() MapKeeper {
+func InitMapKeeper() *MapKeeper {
 	var mapTasks sync.Map
 	mapKeeper := MapKeeper{MapTasks: mapTasks}
-	return mapKeeper
+	return &mapKeeper
 }
 
 // метод для сохранения в мапу

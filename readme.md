@@ -1,12 +1,14 @@
 # API Fetch Task
 
+URL: http://127.0.0.1:8080
+
 ## Запрос к другим ресурсам
 
 От клиента получаем запрос обратиться к другим ресурсам.
 
 #### Request:
 
-POST http://127.0.0.1:8080/addTask 
+POST /task
 
 BODY:
 
@@ -75,7 +77,7 @@ BODY:
 
 #### Request
 
-GET http://127.0.0.1:8080/getTasks
+GET /tasks
 
 #### Response
 
@@ -124,7 +126,9 @@ GET http://127.0.0.1:8080/getTasks
 
 #### Request
 
-GET  http://127.0.0.1:8080/deleteTask?id=4037200794235010051
+DELETE /task?id=1
+
+id - id запроса
 
 #### Response
 
