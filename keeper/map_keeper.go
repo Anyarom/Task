@@ -6,9 +6,9 @@ import (
 )
 
 type MapKeeper struct {
-	Mtx       sync.Mutex
+	lock      sync.Mutex
+	currentId int
 	MapTasks  sync.Map
-	CurrentId int
 }
 
 // функция для инициализации структуры MapKeeper
@@ -21,11 +21,11 @@ func InitMapKeeper() *MapKeeper {
 // метод для сохранения в мапу
 func (mk *MapKeeper) SaveTask(task Task) int {
 	// генерация id инкрементально
-	mk.Mtx.Lock()
-	reqId := mk.CurrentId + 1
-	mk.CurrentId = reqId
+	mk.lock.Lock()
+	reqId := mk.currentId + 1
+	mk.currentId = reqId
 	mk.MapTasks.Store(reqId, task)
-	mk.Mtx.Unlock()
+	mk.lock.Unlock()
 	return reqId
 }
 
