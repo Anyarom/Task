@@ -15,7 +15,7 @@ func (wrapHandler *WrapperHandler) DeleteTaskHandler(ctx *fasthttp.RequestCtx) {
 
 	// получение ключа из запроса
 	idArg := ctx.QueryArgs().Peek("id")[:]
-	id, err := strconv.Atoi(string(idArg))
+	id, err := strconv.ParseUint(string(idArg), 10, 64)
 	if err != nil {
 		wrapHandler.Log.Debug().Caller().Err(err).Bytes("id", idArg).Msg("")
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)

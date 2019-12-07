@@ -14,7 +14,7 @@ type WrapperHandler struct {
 }
 
 type ReqExtended struct {
-	ReqId          int
+	ReqId          uint64
 	RespStatusChan chan bool
 }
 

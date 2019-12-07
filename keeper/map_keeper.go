@@ -7,7 +7,7 @@ import (
 
 type MapKeeper struct {
 	lock      sync.Mutex
-	currentId int
+	currentId uint64
 	MapTasks  sync.Map
 }
 
@@ -19,7 +19,7 @@ func InitMapKeeper() *MapKeeper {
 }
 
 // метод для сохранения в мапу
-func (mk *MapKeeper) SaveTask(task Task) int {
+func (mk *MapKeeper) SaveTask(task Task) uint64 {
 	// генерация id инкрементально
 	mk.lock.Lock()
 	reqId := mk.currentId + 1
@@ -30,12 +30,12 @@ func (mk *MapKeeper) SaveTask(task Task) int {
 }
 
 // метод для обновления значений в мапе
-func (mk *MapKeeper) UpdateTask(reqId int, task Task) {
+func (mk *MapKeeper) UpdateTask(reqId uint64, task Task) {
 	mk.MapTasks.Store(reqId, task)
 }
 
 // метод получения одного запроса
-func (mk *MapKeeper) GetById(reqId int) (task Task, ok bool) {
+func (mk *MapKeeper) GetById(reqId uint64) (task Task, ok bool) {
 	t, ok := mk.MapTasks.Load(reqId)
 	if !ok {
 		log.Debug().Caller().Msg("")
@@ -55,6 +55,6 @@ func (mk *MapKeeper) GetAll() []ReqTask {
 }
 
 // метод для удаления из мапы
-func (mk *MapKeeper) DeleteById(reqId int) {
+func (mk *MapKeeper) DeleteById(reqId uint64) {
 	mk.MapTasks.Delete(reqId)
 }
