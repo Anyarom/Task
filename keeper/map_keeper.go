@@ -2,13 +2,13 @@ package keeper
 
 import (
 	"github.com/rs/zerolog/log"
-	"math/rand"
 	"sync"
-	"time"
 )
 
 type MapKeeper struct {
-	MapTasks sync.Map
+	Mtx       sync.Mutex
+	MapTasks  sync.Map
+	CurrentId int
 }
 
 // функция для инициализации структуры MapKeeper
@@ -20,10 +20,12 @@ func InitMapKeeper() *MapKeeper {
 
 // метод для сохранения в мапу
 func (mk *MapKeeper) SaveTask(task Task) int {
-	// генерация id
-	rand.Seed(time.Now().UnixNano())
-	reqId := rand.Int()
+	// генерация id инкрементально
+	mk.Mtx.Lock()
+	reqId := mk.CurrentId + 1
+	mk.CurrentId = reqId
 	mk.MapTasks.Store(reqId, task)
+	mk.Mtx.Unlock()
 	return reqId
 }
 
