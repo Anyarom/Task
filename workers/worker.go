@@ -9,7 +9,7 @@ import (
 )
 
 // обработчик запросов
-func Worker(reqCh chan handlers.ReqExtended, client *http.Client, myMap keeper.Keeper, log zerolog.Logger) {
+func Worker(reqCh <-chan handlers.ReqExtended, client *http.Client, myMap keeper.Keeper, log zerolog.Logger) {
 	for {
 
 		// получение из канала id таски и канала для ответа
