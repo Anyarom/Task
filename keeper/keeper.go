@@ -8,7 +8,6 @@ type ReqTask struct {
 }
 
 type RespTask struct {
-	ReqId   uint64   `json:"id"`
 	Status  int      `json:"status"`
 	Headers []Header `json:"headers"`
 	Length  int      `json:"length"`
@@ -25,10 +24,16 @@ type Task struct {
 	RespTask RespTask
 }
 
+// структура для запроса getAll
+type ReqTaskExtended struct {
+	Id      uint64  `json:"request_id"`
+	ReqTask ReqTask `json:"request"`
+}
+
 type Keeper interface {
 	SaveTask(task Task) uint64
 	UpdateTask(reqId uint64, task Task)
 	GetById(id uint64) (task Task, ok bool)
-	GetAll() []ReqTask
+	GetAll() []ReqTaskExtended
 	DeleteById(id uint64)
 }

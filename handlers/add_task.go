@@ -45,8 +45,16 @@ func (wrapHandler *WrapperHandler) AddTaskHandler(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
+	// структура обертка только для ответа
+	type RespTaskExtended struct {
+		Id          uint64          `json:"request_id"`
+		RespTaskExt keeper.RespTask `json:"response"`
+	}
+	// инициализация структуры для ответа
+	respTaskExtended := RespTaskExtended{Id: reqId, RespTaskExt: task.RespTask}
+
 	// парсинг и формирование ответа
-	resp, err := json.Marshal(task.RespTask)
+	resp, err := json.Marshal(respTaskExtended)
 	if err != nil {
 		wrapHandler.Log.Debug().Caller().Str("address", reqTask.Address).Msg("")
 		ctx.SetStatusCode(fasthttp.StatusInternalServerError)

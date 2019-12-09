@@ -35,40 +35,42 @@ BODY:
 
 ````json
   {
-        "Id": 4037200794235010051,
-        "Status": 405,
-        "Headers": [
-            {
-                "Key": "Content-Length",
-                "Value": "1589"
-            },
-            {
-                "Key": "X-Xss-Protection",
-                "Value": "0"
-            },
-            {
-                "Key": "X-Frame-Options",
-                "Value": "SAMEORIGIN"
-            },
-            {
-                "Key": "Allow",
-                "Value": "GET, HEAD"
-            },
-            {
-                "Key": "Date",
-                "Value": "Sun, 01 Dec 2019 20:46:17 GMT"
-            },
-            {
-                "Key": "Content-Type",
-                "Value": "text/html; charset=UTF-8"
-            },
-            {
-                "Key": "Server",
-                "Value": "gws"
-            }
-        ],
-        "Length": 1589
-    }
+      "request_id": 1,
+      "response": {
+          "status": 405,
+          "headers": [
+              {
+                  "key": "Date",
+                  "value": "Sun, 08 Dec 2019 17:27:32 GMT"
+              },
+              {
+                  "key": "Content-Type",
+                  "value": "text/html; charset=UTF-8"
+              },
+              {
+                  "key": "Server",
+                  "value": "gws"
+              },
+              {
+                  "key": "Content-Length",
+                  "value": "1589"
+              },
+              {
+                  "key": "X-Xss-Protection",
+                  "value": "0"
+              },
+              {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+              },
+              {
+                  "key": "Allow",
+                  "value": "GET, HEAD"
+              }
+          ],
+          "length": 1589
+      }
+  }
 ````
     
 ## Запрос на получение всех запросов к другим ресурсам
@@ -85,39 +87,45 @@ GET /tasks
 
 ````json
 {
-      "ReqTasks": [
-          {
-              "Method": "POST",
-              "Address": "http://google.com",
-              "Headers": [
-                  {
-                      "Key": "key1",
-                      "Value": "val1"
-                  },
-                  {
-                      "Key": "key2",
-                      "Value": "val2-"
-                  }
-              ],
-              "Body": "task1"
-          },
-          {
-              "Method": "POST",
-              "Address": "http://google.com",
-              "Headers": [
-                  {
-                      "Key": "key1",
-                      "Value": "val1"
-                  },
-                  {
-                      "Key": "key2",
-                      "Value": "val2"
-                  }
-              ],
-              "Body": "task1"
-          }
-      ]
-  }
+    "tasks": [
+        {
+            "request_id": 1,
+            "request": {
+                "method": "POST",
+                "address": "http://google.com",
+                "headers": [
+                    {
+                        "key": "key1",
+                        "value": "val1"
+                    },
+                    {
+                        "key": "key2",
+                        "value": "val2"
+                    }
+                ],
+                "body": "task1"
+            }
+        },
+        {
+            "request_id": 2,
+            "request": {
+                "method": "POST",
+                "address": "http://google.com",
+                "headers": [
+                    {
+                        "key": "key1",
+                        "value": "val1"
+                    },
+                    {
+                        "key": "key2",
+                        "value": "val2"
+                    }
+                ],
+                "body": "task1"
+            }
+        }
+    ]
+}
 ````
 
 ## Запрос на удаление запроса к другим ресурсам

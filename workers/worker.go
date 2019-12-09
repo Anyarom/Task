@@ -36,7 +36,7 @@ func Worker(reqCh <-chan handlers.ReqExtended, client *http.Client, myMap keeper
 		}
 
 		// формирование результата выполнения таски
-		respTask := keeper.RespTask{ReqId: requestWithChannel.ReqId, Status: resp.StatusCode, Headers: hd, Length: int(resp.ContentLength)}
+		respTask := keeper.RespTask{Status: resp.StatusCode, Headers: hd, Length: int(resp.ContentLength)}
 
 		// обновление данных в мапе
 		myMap.UpdateTask(requestWithChannel.ReqId, keeper.Task{ReqTask: task.ReqTask, RespTask: respTask})

@@ -45,13 +45,16 @@ func (mk *MapKeeper) GetById(reqId uint64) (task Task, ok bool) {
 }
 
 // метод для получения всех запросов из мапы
-func (mk *MapKeeper) GetAll() []ReqTask {
-	var reqTasks []ReqTask
+func (mk *MapKeeper) GetAll() []ReqTaskExtended {
+	var tasks []ReqTaskExtended
+
 	mk.MapTasks.Range(func(id, value interface{}) bool {
-		reqTasks = append(reqTasks, value.(Task).ReqTask)
+		reqTaskExtended := ReqTaskExtended{Id: id.(uint64), ReqTask: value.(Task).ReqTask}
+		tasks = append(tasks, reqTaskExtended)
+
 		return true
 	})
-	return reqTasks
+	return tasks
 }
 
 // метод для удаления из мапы

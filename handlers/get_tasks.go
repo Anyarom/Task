@@ -13,7 +13,7 @@ func (wrapHandler *WrapperHandler) GetTasksHandler(ctx *fasthttp.RequestCtx) {
 
 	// заполнение структуры для ответа
 	type RespTasks struct {
-		ReqTasks []keeper.ReqTask `json:"tasks"`
+		ReqTasks []keeper.ReqTaskExtended `json:"tasks"`
 	}
 	respTasks := RespTasks{ReqTasks: reqTasks}
 
