@@ -26,7 +26,7 @@ func main() {
 	// инициализация интерфейса с мапой
 	mapKeeper := keeper.InitMapKeeper()
 
-	// создадание клиета
+	// создание клиента
 	client := http.DefaultClient
 
 	// создание канала для передачи заданий в worker

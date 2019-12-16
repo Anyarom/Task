@@ -18,7 +18,7 @@ func TestAddTask(t *testing.T) {
 	// настройки логирования
 	log := zerolog.New(os.Stdout).With().Logger()
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 20; i++ {
 		go performRequest(log, t)
 	}
 	time.Sleep(10 * time.Second)
